@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# reference documents (binary, not versioned)
+*.pdf
+american_option_encyclopedia.html
