@@ -65,3 +65,35 @@ npm run lint     # ESLint
 - `/` → redirects to first product
 - `/products/<id>` → product page (default tab: overview)
 - `/products/<id>#risk` → product page with risk tab active (hash-based deep link)
+
+## Deployment
+
+**Live site:** https://otc-derivpedia.vercel.app
+**GitHub:** https://github.com/kimjunyeul/OTC-Derivpedia
+**Vercel project:** kimjunyeuls-projects/otc-derivpedia
+
+### Auto-deploy setup
+
+GitHub(`main` 브랜치) → Vercel 자동 배포 연동 완료.
+`main`에 push되는 순간 Vercel이 자동으로 빌드 후 프로덕션 배포.
+
+### 배포 절차 (사용자가 "배포해줘"라고 하면 아래를 순서대로 실행)
+
+```bash
+# 1. 변경사항 스테이징
+git add src/ CLAUDE.md   # 관련 파일만 명시적으로 추가 (node_modules, .next, PDF 제외)
+
+# 2. 커밋
+git commit -m "내용 요약"
+
+# 3. push → Vercel 자동 배포 트리거
+git push
+```
+
+push 후 약 1~2분이면 https://otc-derivpedia.vercel.app 에 반영됨.
+배포 상태는 https://vercel.com/kimjunyeuls-projects/otc-derivpedia 에서 확인 가능.
+
+### 주의사항
+
+- PDF 파일, `node_modules/`, `.next/`, `*.tsbuildinfo`는 `.gitignore`로 제외되어 있으므로 `git add .` 사용 시에도 포함되지 않음
+- `.vercel/project.json`도 gitignore 처리됨 (보안)
