@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Noto_Sans_KR, Inter, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 import Sidebar from '@/components/Sidebar';
+import { SidebarProvider } from '@/components/SidebarContext';
 import { ALL_PRODUCTS } from '@/content/products';
 
 const notoSansKr = Noto_Sans_KR({
@@ -40,12 +41,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </header>
 
         {/* Body: sidebar + main */}
-        <div className="flex flex-1 overflow-hidden">
-          <Sidebar products={ALL_PRODUCTS} />
-          <main className="flex-1 overflow-y-auto bg-bg">
-            {children}
-          </main>
-        </div>
+        <SidebarProvider>
+          <div className="flex flex-1 overflow-hidden">
+            <Sidebar products={ALL_PRODUCTS} />
+            <main className="flex-1 overflow-y-auto bg-bg">
+              {children}
+            </main>
+          </div>
+        </SidebarProvider>
       </body>
     </html>
   );

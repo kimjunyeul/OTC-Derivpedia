@@ -16,6 +16,7 @@ import { callableZeroCouponSwap } from './callable-zero-coupon-swap';
 import { cdsSkHynix } from './cds-sk-hynix';
 import { americanOption } from './american-option';
 import { digitalCompoundDlb } from './digital-compound-dlb';
+import { powerSpread } from './power-spread';
 
 export const ALL_PRODUCTS: Product[] = [
   irs,
@@ -34,6 +35,7 @@ export const ALL_PRODUCTS: Product[] = [
   callableZeroCouponSwap,
   cdsSkHynix,
   americanOption,
+  powerSpread,
   // 추가 상품은 아래에 import 후 등록
 ];
 

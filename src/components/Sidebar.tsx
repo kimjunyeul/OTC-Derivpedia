@@ -6,13 +6,31 @@ import { usePathname } from 'next/navigation';
 import Fuse from 'fuse.js';
 import type { Product } from '@/types/product';
 import { CATEGORY_NAMES, CATEGORY_ORDER } from '@/types/product';
+import { useSidebar } from './SidebarContext';
 
 interface Props {
   products: Product[];
 }
 
+function ChevronLeft() {
+  return (
+    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+    </svg>
+  );
+}
+
+function ChevronRight() {
+  return (
+    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+    </svg>
+  );
+}
+
 export default function Sidebar({ products }: Props) {
   const pathname = usePathname();
+  const { open, toggle } = useSidebar();
   const [query, setQuery] = useState('');
   const [collapsed, setCollapsed] = useState<Set<string>>(new Set());
 
@@ -44,11 +62,27 @@ export default function Sidebar({ products }: Props) {
     });
   };
 
+  /* ── 닫힌 상태: 얇은 스트립 ── */
+  if (!open) {
+    return (
+      <aside className="w-10 flex-shrink-0 flex flex-col items-center border-r border-slate-200 bg-white h-full">
+        <button
+          onClick={toggle}
+          title="사이드바 열기"
+          className="mt-3 p-1.5 rounded-md text-slate-400 hover:text-primary hover:bg-primary/10 transition-colors"
+        >
+          <ChevronRight />
+        </button>
+      </aside>
+    );
+  }
+
+  /* ── 열린 상태: 전체 사이드바 ── */
   return (
     <aside className="w-64 flex-shrink-0 flex flex-col border-r border-slate-200 bg-white h-full">
-      {/* Search */}
-      <div className="p-3 border-b border-slate-100">
-        <div className="relative">
+      {/* Search + 닫기 버튼 */}
+      <div className="p-3 border-b border-slate-100 flex items-center gap-2">
+        <div className="relative flex-1">
           <svg className="absolute left-2.5 top-2.5 w-3.5 h-3.5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z" />
           </svg>
@@ -60,6 +94,13 @@ export default function Sidebar({ products }: Props) {
             className="w-full pl-8 pr-3 py-1.5 text-sm bg-slate-50 border border-slate-200 rounded-md outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary placeholder:text-slate-400"
           />
         </div>
+        <button
+          onClick={toggle}
+          title="사이드바 닫기"
+          className="flex-shrink-0 p-1.5 rounded-md text-slate-400 hover:text-primary hover:bg-primary/10 transition-colors"
+        >
+          <ChevronLeft />
+        </button>
       </div>
 
       {/* Navigation */}

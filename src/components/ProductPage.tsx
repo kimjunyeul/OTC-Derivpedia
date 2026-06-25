@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import type { Product, RiskLevel } from '@/types/product';
 import { CATEGORY_NAMES } from '@/types/product';
 import MarkdownSection from './MarkdownSection';
+import { useSidebar } from './SidebarContext';
 import dynamic from 'next/dynamic';
 
 const PayoffChart = dynamic(() => import('./charts/PayoffChart'), { ssr: false });
@@ -42,6 +43,8 @@ interface Props {
 }
 
 export default function ProductPage({ product }: Props) {
+  const { open: sidebarOpen } = useSidebar();
+
   const tabs = BASE_TABS.filter(
     (t) =>
       (t.id !== 'cashflow' || !!product.sections.cashflow) &&
@@ -72,7 +75,7 @@ export default function ProductPage({ product }: Props) {
       : product.sections[activeTab as Exclude<SectionId, 'cashflow' | 'calculator'>];
 
   return (
-    <div className="max-w-4xl mx-auto px-6 py-6">
+    <div className={`${sidebarOpen ? 'max-w-4xl' : 'max-w-none'} mx-auto px-6 py-6 transition-all duration-300`}>
       {/* Breadcrumb */}
       <nav className="text-xs text-slate-400 mb-4">
         <span>{CATEGORY_NAMES[product.categoryId]}</span>
