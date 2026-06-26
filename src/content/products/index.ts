@@ -17,6 +17,8 @@ import { cdsSkHynix } from './cds-sk-hynix';
 import { americanOption } from './american-option';
 import { digitalCompoundDlb } from './digital-compound-dlb';
 import { powerSpread } from './power-spread';
+import { longShortElb } from './long-short-elb';
+import { cpDummyOptionDlb } from './cp-dummy-option-dlb';
 
 export const ALL_PRODUCTS: Product[] = [
   irs,
@@ -36,6 +38,8 @@ export const ALL_PRODUCTS: Product[] = [
   cdsSkHynix,
   americanOption,
   powerSpread,
+  longShortElb,
+  cpDummyOptionDlb,
   // 추가 상품은 아래에 import 후 등록
 ];
 
